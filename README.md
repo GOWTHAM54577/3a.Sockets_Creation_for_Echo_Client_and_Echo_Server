@@ -9,46 +9,37 @@ Sockets Links.
  server .
 4. Send and receive the message using the send function in socket.
 ## PROGRAM
-### SERVER
-
-import socket
-
-HOST = '127.0.0.1'  
-PORT = 65432       
-
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print('Connected by', addr)
-        while True:
-            data = conn.recv(1024)
-            if not data:
-                break
-            conn.sendall(data)
-
 ### CLIENT
-
+```
 import socket
+s=socket.socket()
+s.connect(('localhost',8000))
+while True:
+ msg=input("Client > ")
+ s.send(msg.encode())
+ print("Server > ",s.recv(1024).decode())
 
-HOST = '127.0.0.1'  
-PORT = 65432        
+```
+### SERVER
+```
+import socket
+s=socket.socket()
+s.bind(('localhost',8000))
+s.listen(5)
+c,addr=s.accept()
+while True:
+ ClientMessage=c.recv(1024).decode()
+ c.send(ClientMessage.encode())
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    while True:
-        message = input("Enter message to send to server: ")
-        s.sendall(message.encode())
-        data = s.recv(1024)
-        print('Received', repr(data.decode()))
-
+```
 ## OUPUT
-### SERVER
-![WhatsApp Image 2024-04-03 at 11 02 49_74e0ec33](https://github.com/GOWTHAM54577/3a.Sockets_Creation_for_Echo_Client_and_Echo_Server/assets/144589420/14c7605e-9797-4c6c-bed3-b4e72733963e)
-
 ### CLIENT
-![WhatsApp Image 2024-04-03 at 11 02 50_1693ebd5](https://github.com/GOWTHAM54577/3a.Sockets_Creation_for_Echo_Client_and_Echo_Server/assets/144589420/0abbf272-78b9-4747-a4d1-1fa678010cf7)
+![image](https://github.com/GOWTHAM54577/3a.Sockets_Creation_for_Echo_Client_and_Echo_Server/assets/144589420/040583cc-2b01-4464-8a3e-261afc9b5f24)
+
+
+### SERVER
+![image](https://github.com/GOWTHAM54577/3a.Sockets_Creation_for_Echo_Client_and_Echo_Server/assets/144589420/eb62b692-14ca-43ee-a1ba-3197355c53dc)
+
 
 ## RESULT
 Thus, the python program for creating Echo Client and Echo Server using TCP Sockets Links 
